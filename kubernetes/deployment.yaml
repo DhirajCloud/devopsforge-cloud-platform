@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devopsforge-api
+  namespace: devopsforge
+  labels:
+    app: devopsforge-api
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: devopsforge-api
+
+  template:
+    metadata:
+      labels:
+        app: devopsforge-api
+
+    spec:
+      containers:
+        - name: devopsforge-api
+          image: 684018405041.dkr.ecr.ap-south-1.amazonaws.com/devopsforge-api:1.0-amd64
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20

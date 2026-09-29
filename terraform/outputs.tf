@@ -22,3 +22,18 @@ output "availability_zones" {
   description = "Availability Zones used by the VPC"
   value       = module.vpc.azs
 }
+
+output "eks_cluster_name" {
+  description = "Name of the DevOpsForge EKS cluster"
+  value       = module.eks.cluster_name
+}
+
+output "eks_cluster_endpoint" {
+  description = "EKS cluster API endpoint"
+  value       = module.eks.cluster_endpoint
+}
+
+output "eks_node_group_names" {
+  description = "EKS managed node group names"
+  value       = module.eks.node_group_names
+}
